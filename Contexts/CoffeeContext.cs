@@ -53,6 +53,12 @@ public class CoffeeContext : IContext<Coffee>
         return _coffees;
     }
 
+    public void ReturnFromJson()
+    {
+        //_coffee = File.ReadAllText(_fileName);
+        Console.WriteLine(File.ReadAllText(_fileName));
+    }
+
     public void Update(Coffee entity)
     {
         // Ищу в списке пользователя с таким id
