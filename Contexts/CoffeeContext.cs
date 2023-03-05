@@ -7,8 +7,9 @@ public class CoffeeContext : IContext<Coffee>
 {
     private string _fileName = "coffees.json"; // название файла
     private List<Coffee> _coffees;
+    private IEnumerable<object> _coffee;
 
-        public CoffeeContext()
+    public CoffeeContext()
     {
         if (!File.Exists(_fileName))
             File.Create(_fileName);
@@ -142,6 +143,26 @@ public class CoffeeContext : IContext<Coffee>
             Console.WriteLine(TEMP.QuantityOfSoldCoffe);
         }
         
+    }
+
+    public double GetAllMoneyFromCoffee()
+    {
+        int SizeOfList = 0;
+        double AllMoney = 0;
+        List<Coffee> _coffeeThis = _coffees;
+        foreach(var cof in _coffeeThis)
+        //я пытался сделать изначально через форыч,
+        //но оно выводило ошибку когда
+        //я пытался достать QuantityOfSoldCoffe из cof 
+        {
+            SizeOfList += 1;
+        }
+        for (int i = 0; i < SizeOfList; i++)
+        {
+            var cofe = _coffeeThis[i];
+            AllMoney += cofe.QuantityOfSoldCoffe * cofe.PricePerOneCoffe;
+        }
+        return AllMoney;
     }
 
 }

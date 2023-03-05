@@ -21,4 +21,5 @@ context.Create(new Coffee
     QuantityOfSoldCoffe = 100
 });
 context.Save();
-context.PrintAllSortedByPrice();
+//context.PrintAllSortedByPrice();
+Console.WriteLine(context.GetAllMoneyFromCoffee());
