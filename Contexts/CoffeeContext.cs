@@ -7,7 +7,6 @@ public class CoffeeContext : IContext<Coffee>
 {
     private string _fileName = "coffees.json"; // название файла
     private List<Coffee> _coffees;
-    private IEnumerable<object> _coffee;
 
     public CoffeeContext()
     {
@@ -53,12 +52,6 @@ public class CoffeeContext : IContext<Coffee>
         return _coffees;
     }
 
-    public void ReturnFromJson()
-    {
-        //_coffee = File.ReadAllText(_fileName);
-        Console.WriteLine(File.ReadAllText(_fileName));
-    }
-
     public void Update(Coffee entity)
     {
         // Ищу в списке пользователя с таким id
@@ -75,62 +68,25 @@ public class CoffeeContext : IContext<Coffee>
 
     public void PrintAllSortedByDate() //ну или так-же как и 4-тое, просто там заменить на 146 строчке PricePerOneCoffe на CreatedAt 
     {
-        List<Coffee> _coffeeSorted = _coffees;
-        List<Coffee> _coffeeTEMP = _coffees;
-
-        int SizeOfList = 0;
-
-        foreach(var cof in _coffeeSorted)
-        {
-            SizeOfList += 1;
-        }
-
-        while (true)
-        {
-            int[] ArrayOfNumbers = new int[SizeOfList];
-            int TEMP = 0;
-            Random ran = new Random();
-            bool Swithcer = false;
-            for (int i = 0; i < SizeOfList; i++)
+        for (int i = 0; i < _coffees.Count- 1; i++)
+            for (int j = 0; j < _coffees.Count - i - 1; j++)
             {
-                ArrayOfNumbers[i] = i;
-            }
-            for (int i = 0; i < SizeOfList; i++)
-            {
-                while (Swithcer == false)
+                var cofnew = _coffees[j];
+                var cofnext = _coffees[j + 1];
+                if (cofnew.CreatedAt > cofnext.CreatedAt)
                 {
-                    TEMP = ran.Next(0, SizeOfList);
-                    for (int j = 0; j < SizeOfList;j++)
-                    {
-                        if (TEMP == ArrayOfNumbers[j])
-                        {
-                            ArrayOfNumbers[j] = 666;
-                            Swithcer = true;
-                            break;
-                        }
-                    }
+                    _coffees[j] = cofnext;
+                    _coffees[j + 1] = cofnew;
                 }
-                _coffeeSorted[i] = _coffees[TEMP];
-            }
-            for (int i = 0; i < SizeOfList- 1; i++)
-                for (int j = 0; j < SizeOfList - i - 1; j++)
-                {
-                    var cofnew = _coffeeTEMP[j];
-                    var cofnext = _coffeeTEMP[j + 1];
-                    if (cofnew.CreatedAt > cofnext.CreatedAt)
-                    {
-                        _coffeeTEMP[j] = cofnext;
-                        _coffeeTEMP[j + 1] = cofnew;
-                    }
-                }
-            if (_coffeeTEMP == _coffeeSorted)
-                break;
-        }
-        for (int i = 0; i < SizeOfList; i++)
+            } 
+        
+        for (int i = 0; i < _coffees.Count; i++)
         {
-            var TEMP = _coffeeSorted[i];
+            var TEMP = _coffees[i];
             Console.WriteLine("_____");
             Console.WriteLine(TEMP.TypeOFCofee);
+            Console.WriteLine(TEMP.PricePerOneCoffe);
+            Console.WriteLine(TEMP.QuantityOfSoldCoffe);
             Console.WriteLine(TEMP.CreatedAt);
         }
 
@@ -138,27 +94,21 @@ public class CoffeeContext : IContext<Coffee>
 
     public void PrintAllSortedByPrice()
     {
-        List<Coffee> _coffeeSorted = _coffees;
-        int SizeOfList = 0;
-        foreach(var cof in _coffeeSorted)
-        {
-            SizeOfList += 1;
-        }
-        for (int i = 0; i < SizeOfList- 1; i++)
-            for (int j = 0; j < SizeOfList - i - 1; j++)
+        for (int i = 0; i < _coffees.Count- 1; i++)
+            for (int j = 0; j < _coffees.Count - i - 1; j++)
             {
-                var cofnew = _coffeeSorted[j];
-                var cofnext = _coffeeSorted[j + 1];
+                var cofnew = _coffees[j];
+                var cofnext = _coffees[j + 1];
                 if (cofnew.PricePerOneCoffe > cofnext.PricePerOneCoffe)
                 {
-                    _coffeeSorted[j] = cofnext;
-                    _coffeeSorted[j + 1] = cofnew;
+                    _coffees[j] = cofnext;
+                    _coffees[j + 1] = cofnew;
                 }
-            }
+            } 
         
-        for (int i = 0; i < SizeOfList; i++)
+        for (int i = 0; i < _coffees.Count; i++)
         {
-            var TEMP = _coffeeSorted[i];
+            var TEMP = _coffees[i];
             Console.WriteLine("_____");
             Console.WriteLine(TEMP.TypeOFCofee);
             Console.WriteLine(TEMP.PricePerOneCoffe);
@@ -169,21 +119,9 @@ public class CoffeeContext : IContext<Coffee>
 
     public double GetAllMoneyFromCoffee()
     {
-        int SizeOfList = 0;
         double AllMoney = 0;
-        List<Coffee> _coffeeThis = _coffees;
-        foreach(var cof in _coffeeThis)
-        //я пытался сделать изначально через форыч,
-        //но оно выводило ошибку когда
-        //я пытался достать QuantityOfSoldCoffe из cof 
-        {
-            SizeOfList += 1;
-        }
-        for (int i = 0; i < SizeOfList; i++)
-        {
-            var cofe = _coffeeThis[i];
-            AllMoney += cofe.QuantityOfSoldCoffe * cofe.PricePerOneCoffe;
-        }
+        foreach(var cof in _coffees)
+            AllMoney += cof.QuantityOfSoldCoffe * cof.PricePerOneCoffe;
         return AllMoney;
     }
 
