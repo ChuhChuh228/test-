@@ -22,4 +22,5 @@ context.Create(new Coffee
 });
 context.Save();
 //context.PrintAllSortedByPrice();
-Console.WriteLine(context.GetAllMoneyFromCoffee());
+//Console.WriteLine(context.GetAllMoneyFromCoffee());
+context.PrintAllSortedByDate();
