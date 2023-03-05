@@ -66,7 +66,82 @@ public class CoffeeContext : IContext<Coffee>
         coffee.QuantityOfSoldCoffe = entity.QuantityOfSoldCoffe;
     }
 
+    //это я пытаюсь 3 сделать через bogosort )))))))))
+    //public void PrintAllSortedByDate()
+    //{
+    //    List<Coffee> _coffeeSorted = _coffees;
+//
+    //    int SizeOfList = 0;
+//
+    //    foreach(var cof in _coffeeSorted)
+    //    {
+    //        SizeOfList += 1;
+    //    }
+//
+    //    while (true)
+    //    {
+    //        int[] ArrayOfNumbers = new int[SizeOfList];
+    //        int TEMP = 0;
+    //        Random ran = new Random();
+    //        bool Swithcer = false;
+    //        for (int i = 0; i < SizeOfList; i++)
+    //        {
+    //            ArrayOfNumbers[i] = i;
+    //        }
+    //        for (int i = 0; i < SizeOfList; i++)
+    //        {
+    //            while (Swithcer == false)
+    //            {
+    //                TEMP = ran.Next(0, SizeOfList);
+    //                for (int j = 0; j < SizeOfList;j++)
+    //                {
+    //                    if (TEMP == ArrayOfNumbers[j])
+    //                    {
+    //                        ArrayOfNumbers[j] = 666;
+    //                        Swithcer = true;
+    //                        break;
+    //                    }
+    //                }
+    //            }
+    //            _coffeeSorted[i] = _coffees[TEMP];
+    //        }
+    //        for (int i = 0; i < SizeOfList; i++)
+    //        {
+    //            for 
+    //        }
+    //    }
+//
+    //}
 
-
+    public void PrintAllSortedByPrice()
+    {
+        List<Coffee> _coffeeSorted = _coffees;
+        int SizeOfList = 0;
+        foreach(var cof in _coffeeSorted)
+        {
+            SizeOfList += 1;
+        }
+        for (int i = 0; i < SizeOfList- 1; i++)
+            for (int j = 0; j < SizeOfList - i - 1; j++)
+            {
+                var cofnew = _coffeeSorted[j];
+                var cofnext = _coffeeSorted[j + 1];
+                if (cofnew.PricePerOneCoffe > cofnext.PricePerOneCoffe)
+                {
+                    _coffeeSorted[j] = cofnext;
+                    _coffeeSorted[j + 1] = cofnew;
+                }
+            }
+        
+        for (int i = 0; i < SizeOfList; i++)
+        {
+            var TEMP = _coffeeSorted[i];
+            Console.WriteLine("_____");
+            Console.WriteLine(TEMP.TypeOFCofee);
+            Console.WriteLine(TEMP.PricePerOneCoffe);
+            Console.WriteLine(TEMP.QuantityOfSoldCoffe);
+        }
+        
+    }
 
 }

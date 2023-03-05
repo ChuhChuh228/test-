@@ -8,4 +8,17 @@ context.Create(new Coffee
     PricePerOneCoffe = 10,
     QuantityOfSoldCoffe = 100
 });
+context.Create(new Coffee
+{
+    TypeOFCofee = "Chernogoriy",
+    PricePerOneCoffe = 15,
+    QuantityOfSoldCoffe = 100
+});
+context.Create(new Coffee
+{
+    TypeOFCofee = "Peremoloty",
+    PricePerOneCoffe = 12,
+    QuantityOfSoldCoffe = 100
+});
 context.Save();
+context.PrintAllSortedByPrice();
